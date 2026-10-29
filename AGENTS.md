@@ -38,9 +38,17 @@ migration history cannot bootstrap an empty database). It is safe to re-run. The
   host.** Never override that. If it triggers, tell the user and have them move
   their `.env` aside.
 - Stop: `bun run dev:down`. Wipe all local data: `bun run dev:reset`.
-- The local DB starts **empty**. Data comes from a maintainer-provided sanitized
-  dump: `bun run dev:setup -- --restore path/to.dump --seed-search`. Never
-  scrape, and never ask for production credentials.
+- The local DB starts **empty**. To load real data, use the sanitized dump in
+  the private repo `OpenMario/backup` (public course/section/company/position
+  data only; no user or auth data; taken 2026-10-24):
+  ```bash
+  gh repo clone OpenMario/backup ../openmario-backup -- --depth 1
+  bun run dev:setup -- --restore ../openmario-backup/openmario-sanitized-20261024.dump --seed-search
+  ```
+  If `gh repo clone` fails with a 404/permission error, the user does not have
+  access yet: tell them to ask a maintainer to add them to the `OpenMario/backup`
+  repo. Do not look for the data elsewhere. Never scrape, never ask for
+  production credentials, and never commit the dump into this repo.
 
 Prerequisites: Docker (running) and Bun ≥ 1.4.
 

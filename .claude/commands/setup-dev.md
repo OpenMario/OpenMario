@@ -15,6 +15,9 @@ compose file or `.env`.
    `MEILI_HOST` consistent).
 4. Verify: `docker compose -f docker-compose.dev.yml ps` shows both services
    healthy, and `curl -s localhost:7700/health` returns `{"status":"available"}`.
-5. Tell the user the database is empty and that a maintainer can provide a
-   sanitized dump for `bun run dev:setup -- --restore <file> --seed-search`.
+5. The database is empty. Offer to load the sanitized dump from the private
+   `OpenMario/backup` repo: `gh repo clone OpenMario/backup ../openmario-backup -- --depth 1`,
+   then `bun run dev:setup -- --restore ../openmario-backup/openmario-sanitized-20261024.dump --seed-search`.
+   If the clone is denied, the user needs a maintainer to grant access to that
+   repo; stop there rather than seeking data elsewhere.
 6. Offer to start `bun run dev`, and report the URLs.

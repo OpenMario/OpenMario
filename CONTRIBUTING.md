@@ -18,10 +18,14 @@ bun run dev           # http://localhost:5173
 Using Claude Code? Open the repo and run `/setup-dev`. Using another agent, point
 it at [AGENTS.md](AGENTS.md) and say "set up the local environment".
 
-The local database starts empty. Ask a maintainer for a sanitized dump, then:
+The local database starts empty. A sanitized dump (public course, section,
+company and position data; no user data) lives in the private
+[OpenMario/backup](https://github.com/OpenMario/backup) repo. Ask a maintainer to
+add you to it, then:
 
 ```bash
-bun run dev:setup -- --restore path/to/openmario.dump --seed-search
+gh repo clone OpenMario/backup ../openmario-backup -- --depth 1
+bun run dev:setup -- --restore ../openmario-backup/openmario-sanitized-20261024.dump --seed-search
 ```
 
 Other handy commands: `bun run dev:down` (stop), `bun run dev:reset` (wipe local

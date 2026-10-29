@@ -95,6 +95,8 @@ cat <<'EOF'
   API                http://localhost:3000/api
   Meilisearch        http://localhost:7700
 
-The database starts empty. Ask a maintainer for a sanitized dump, then:
-  bun run dev:setup -- --restore path/to/openmario.dump --seed-search
+The database starts empty. Load the sanitized dump from the private
+OpenMario/backup repo (ask a maintainer for access if needed):
+  gh repo clone OpenMario/backup ../openmario-backup -- --depth 1
+  bun run dev:setup -- --restore ../openmario-backup/openmario-sanitized-20261024.dump --seed-search
 EOF
